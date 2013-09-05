@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flickr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://cloud.github.com/downloads/emberjs/ember.js/ember-0.9.6.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/bootstrap.js"></script>
+</head>
+<body>
+<script type="text/x-handlebars">
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <h3>Sample Emberjs using Flickr API</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6">
+            <ul class="thumbnails">
+                {{#each App.flickrController}}
+                <li class="span4">
+                    <div class="thumbnail">
+                        <img {{bindAttr src="url"}} />
+                        <h6>{{title}}</h6>
+                        <p>{{description}}</p>
+                    </div>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="span6">
+            <div class="row">
+                <div class="span6">
+                    <div class="input-append">
+                        Search images: {{view App.SearchTextField class="span2" placeholder="Photo title" valueBinding="App.flickrController.searchTerm"}}
+                        <button {{action "searchPhotos" target="App.flickrController"}} class="btn btn-primary">Go!</button>
+                    </div>
+                </div>
+                <div class="span6">
+                    <h5>Recent search terms</h5>
+                    {{#each App.recentSearchesController.reverse}}
+                    <p>
+                        <a class="btn btn-small btn-danger" href="#" {{action "removeSearchTerm" target="App.recentSearchesController"}}><i class="icon-remove"></i></a>
+                        <a class="btn btn-small" href="#" {{action "searchAgain" target="App.recentSearchesController"}}>{{this}}</a>
+                    </p>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+</body>
+</html>

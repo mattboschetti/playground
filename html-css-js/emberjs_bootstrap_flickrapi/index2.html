@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flickr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://cloud.github.com/downloads/emberjs/ember.js/ember-0.9.6.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/bootstrap.js"></script>
+</head>
+<body>
+<script type="text/x-handlebars">
+<div class="container">
+    <div class="row">
+        <div id="myCarousel" class="carousel slide">
+            <div class="active item"></div>
+            <!-- Carousel items -->
+            <div class="carousel-inner">
+                {{#each App.flickrController}}
+                <div class="item">
+                    <h6>{{title}}</h6>
+                    <img {{bindAttr src="url"}} />
+                </div>
+                {{/each}}
+            </div>
+            <!-- Carousel nav -->
+            <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+            <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <div class="input-append">
+                Search images: {{view App.SearchTextField class="span2" placeholder="Photo title" valueBinding="App.flickrController.searchTerm"}}
+                <button {{action "searchPhotos" target="App.flickrController"}} class="btn">Go!</button>
+            </div>
+        </div>
+        <div>
+            Recent search terms
+            <ol>
+                {{#each App.recentSearchesController.reverse}}
+                <li> <a href="#" title="view again" {{action "searchAgain" target="App.recentSearchesController"}}>{{this}}</a> - <a href="#" title="remove" {{action "removeSearchTerm" target="App.recentSearchesController"}}>X</a> </li>
+                {{/each}}
+            </ol>
+        </div>
+    </div>
+</div>
+</script>
+</body>
+</html>
